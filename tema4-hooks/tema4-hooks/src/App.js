@@ -1,22 +1,21 @@
-import logo from './logo.svg';
+
 import './App.css';
+import Ejemplo1 from './hooks/ejemplo1';
+import Ejemplo2 from './hooks/ejemplo2';
+import ComponenteConContexto from './hooks/ejemplo3';
+import Ejemplo4 from './hooks/ejemplo4';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      {/* Usando HOOKS*/}
+      <Ejemplo4 nombre="Carlos">
+      {/**
+      *  TODO ESTO SE TRATARÁ COMO PROPS.CHILDREN
+      */}
+        <h3>Contenido de Children</h3>
+      </Ejemplo4>
       </header>
     </div>
   );

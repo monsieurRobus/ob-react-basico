@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { LEVELS } from '../models/levels.enum'
 import { Task } from '../models/task'
 import TaskComponent from '../pure/taskComponent'
@@ -6,9 +6,22 @@ import TaskComponent from '../pure/taskComponent'
 
 function TaskListComponent() {
 
+
+    // estado del componente
     const defaultTask = new Task('Hacer la comida','Hoy te toca cocinar a tí, ¡Haz la comida!',false,LEVELS.NORMAL)
 
-    const changestate = (id) => {
+    const [tasks, setTasks] = useState([defaultTask]);
+
+    // Control del ciclo de vida
+
+    useEffect(() => {
+        console.log("Modificacion de tareas")
+        return () => {
+            console.log("La tarea va a desmontarse")
+        };
+    }, [tasks]);
+
+    const changeCompleted= (id) => {
         console.log("Cambiar estado")
     }
     return (
