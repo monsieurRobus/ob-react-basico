@@ -11,11 +11,12 @@ function TaskListComponent() {
     const defaultTask = new Task('Hacer la comida','Hoy te toca cocinar a tí, ¡Haz la comida!',false,LEVELS.NORMAL)
 
     const [tasks, setTasks] = useState([defaultTask]);
-
+    const [loading, setLoading] = useState(true);
     // Control del ciclo de vida
 
     useEffect(() => {
         console.log("Modificacion de tareas")
+        setLoading(false)
         return () => {
             console.log("La tarea va a desmontarse")
         };
