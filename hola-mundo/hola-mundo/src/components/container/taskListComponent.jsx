@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { LEVELS } from '../models/levels.enum'
 import { Task } from '../models/task'
+import TaskForm from '../pure/forms/taskForm'
 import TaskComponent from '../pure/taskComponent'
+
 
 
 function TaskListComponent() {
@@ -13,8 +15,11 @@ function TaskListComponent() {
     }
     // estado del componente
     const defaultTask = new Task('Hacer la comida','Hoy te toca cocinar a tí, ¡Haz la comida!',false,LEVELS.NORMAL)
-
-    const [tasks, setTasks] = useState([defaultTask]);
+    const defaultTask1 = new Task('Ejemploi','Hoy te toca cocinar a tí, ¡Haz la comida!',false,LEVELS.URGENT)
+    const defaultTask2 = new Task('Esto no es un ejemplo','Hoy te toca cocinar a tí, ¡Haz la comida!',false,LEVELS.URGENT)
+    const defaultTask3 = new Task('Hacer la comida','Hoy te toca cocinar a tí, ¡Haz la comida!',false,LEVELS.BLOCKING)
+    
+    const [tasks, setTasks] = useState([defaultTask,defaultTask1,defaultTask2,defaultTask3]);
     const [loading, setLoading] = useState(true);
     // Control del ciclo de vida
 
@@ -26,8 +31,31 @@ function TaskListComponent() {
         };
     }, [tasks]);
 
-    const changeCompleted= (id) => {
-        console.log("Cambiar estado")
+    const completeTask = (task) => {
+        const index = tasks.indexOf(task);
+        const tempTasks = [...tasks]; // Usamos una variable temporal para trabajar sobre las tareas
+        tempTasks[index].completed = !tempTasks[index].completed; // Cambiamos el estado de la tarea
+        // Actualizamos el estado de la lista, al usar el setState actualiza el estado de la propiedad y además
+        // vuelve a dibujar las listas
+        setTasks(tempTasks)
+    }
+
+
+    const deleteTask = (task) => {
+        const index = tasks.indexOf(task);
+        const tempTasks = [...tasks]; // Usamos una variable temporal para trabajar sobre las tareas
+        tempTasks.splice(index,1) // Borramos tarea
+        // Actualizamos el estado de la lista, al usar el setState actualiza el estado de la propiedad y además
+        // vuelve a dibujar las listas
+        setTasks(tempTasks)
+    }
+
+    const addTask = (task) => {
+        const tempTasks = [...tasks]; // Usamos una variable temporal para trabajar sobre las tareas
+        tempTasks.push(task) // Borramos tarea
+        // Actualizamos el estado de la lista, al usar el setState actualiza el estado de la propiedad y además
+        // vuelve a dibujar las listas
+        setTasks(tempTasks)
     }
     return (
         <div >
@@ -42,19 +70,28 @@ function TaskListComponent() {
                         <table>
                             <thead>
                                 <tr>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Priority</th>
-                                    <th scope="col">Actions</th>
+                                    <th scope="col" style={{color:"gray"}}>Title</th>
+                                    <th scope="col" style={{color:"gray"}}>Description</th>
+                                    <th scope="col" style={{color:"gray"}}>Priority</th>
+                                    <th scope="col" style={{color:"gray"}}>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {/**Iteramos sobre una lista de tareas */}
-                                <tr><TaskComponent task={defaultTask}></TaskComponent></tr>
+                                {tasks.map((task,index) => {
+                                    return(
+                                        <TaskComponent 
+                                            key={index} 
+                                            task={task} 
+                                            complete={completeTask} 
+                                            deleteTask={deleteTask}>
+                                        </TaskComponent>)
+                                })}
+                                
                             </tbody>                            
                         </table>
                     </div>
-
+                <TaskForm add={addTask}></TaskForm>
                 </div>
                 
             </div>
