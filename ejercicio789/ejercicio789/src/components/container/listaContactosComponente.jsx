@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState,useEffect } from 'react';
 import { Contacto } from '../models/Contacto';
+import ContactoComponente from '../pure/contactoComponente';
 
 
 const ListaContactosComponente = () => {
@@ -8,17 +9,17 @@ const ListaContactosComponente = () => {
 
     const contacto1 = new Contacto('Miriam','Alfaro Tebar', 'miriam@correofalso.es', false)
     const contacto2 = new Contacto('Carlos','Díaz Pérez', 'carlos@correofalso.es', true)
-    const contacto3 = new Contacto('Nico','Díaz Alfaro', 'miriam@correofalso.es', false)
-    const contacto4 = new Contacto('Leo','Díaz Alfaro', 'miriam@correofalso.es', false)
+    const contacto3 = new Contacto('Nico','Díaz Alfaro', 'nico@correofalso.es', false)
+    const contacto4 = new Contacto('Leo','Díaz Alfaro', 'leo@correofalso.es', false)
     
-    const contactosInit = [contacto1,contacto2,contacto3,contacto4]
-
-    const [contactos, setcontactos] = useState(contactosInit);
+    
+    const [contactos, setcontactos] = useState([contacto1,contacto2,contacto3,contacto4]);
     return (
         <div>
             <table className='table'>
-                <tr>
-                    <th colspan='4'>Contactos</th>
+            <thead>
+            <tr>
+                    <th colSpan='4'>Contactos</th>
                 </tr>
                 <tr>
                     <th scope="col">Nombre</th>
@@ -26,10 +27,21 @@ const ListaContactosComponente = () => {
                     <th scope="col">Email</th>
                     <th scope="col">Conectado</th>
                 </tr>
-                <tr>
-                    <th scope="row"></th>
-                </tr>
-
+            </thead>
+            <tbody>
+            {
+                    contactos.map((contacto,indice)=>{
+                        return(
+                            <ContactoComponente
+                                key={indice}
+                                contacto={contacto}>
+                            </ContactoComponente>
+                        );
+                    })
+                }
+            </tbody>
+                
+                
             </table>
         </div>
     );

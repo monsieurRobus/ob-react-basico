@@ -1,8 +1,19 @@
-import React from 'react'
 import { Contacto } from '../models/Contacto'
+import React from 'react';
+import '../../styles/contacto.scss'
 
-export default function contactoComponente() {
+const ContactoComponente = ({contacto}) => {
     return (
-        <div>contactoComponente</div>
-    )
+        <tr>
+            <td>{contacto.nombre}</td>
+            <td>{contacto.apellidos}</td>
+            <td>{contacto.email}</td>
+            <td>{(contacto.conectado) ? 
+                <i className='bi-broadcast conectado'></i> :
+                <i className='bi-slash-circle no-conectado'></i>}</td>
+        </tr>
+        
+            );
 }
+
+export default ContactoComponente;
