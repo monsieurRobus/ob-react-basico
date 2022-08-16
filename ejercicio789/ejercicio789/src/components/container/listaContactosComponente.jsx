@@ -2,7 +2,7 @@ import React from 'react';
 import { useState,useEffect } from 'react';
 import { Contacto } from '../models/Contacto';
 import ContactoComponente from '../pure/contactoComponente';
-
+import FormContacto from '../pure/formContacto';
 
 const ListaContactosComponente = () => {
 
@@ -14,6 +14,37 @@ const ListaContactosComponente = () => {
     
     
     const [contactos, setcontactos] = useState([contacto1,contacto2,contacto3,contacto4]);
+    
+    useEffect(()=>{
+        console.log("Contacto creado")
+        return() => {
+            console.log("Contacto va a desmontarse")
+        }
+    },[contactos]);
+
+
+    const crearContacto = (contactoNuevo) => {
+        
+        const listaContactos = [...contactos]
+        listaContactos.push(contactoNuevo)
+        setcontactos(listaContactos)
+
+    }
+
+    const borrarContacto = (contactoBorrar) => {
+        const index = contactos.indexOf(contactoBorrar)
+        const listaContactos = [...contactos]
+        listaContactos.splice(index,1)
+        setcontactos(listaContactos)
+    }
+
+    const conectaContacto = (contactoConectar) => {
+        const index = contactos.indexOf(contactoConectar)
+        const listaContactos = [...contactos]
+        listaContactos[index].conectado = !listaContactos[index].conectado
+        setcontactos(listaContactos)
+    }
+    
     return (
         <div>
             <table className='table'>
@@ -34,7 +65,11 @@ const ListaContactosComponente = () => {
                         return(
                             <ContactoComponente
                                 key={indice}
-                                contacto={contacto}>
+                                contacto={contacto}
+                                crear={crearContacto}
+                                borrar={borrarContacto}
+                                conectar={conectaContacto}
+                                >
                             </ContactoComponente>
                         );
                     })
@@ -43,6 +78,7 @@ const ListaContactosComponente = () => {
                 
                 
             </table>
+            <FormContacto crear={crearContacto}></FormContacto>
         </div>
     );
 }
