@@ -23,6 +23,8 @@ const Cuadrado = () => {
         setRatonDblClick(true)
     }
 
+    
+
     let cuadradoColor;
    
     ratonDblClick ? 
