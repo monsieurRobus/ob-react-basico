@@ -6,7 +6,7 @@ import { Task } from '../../models/task';
 import '../../../styles/form.scss'
 
 
-const TaskForm = ({add}) => {
+const TaskForm = ({add,length}) => {
 
     
     const nameRef = useRef('')
@@ -24,6 +24,21 @@ const TaskForm = ({add}) => {
         add(newTask)
     }
 
+    const normalStyle = {
+        color: 'blue',
+        fontWeight: 'bold'
+    }
+
+    const urgentStyle = {
+        color: 'yellow',
+        fontWeight: 'bold'
+    }
+
+    const blockingStyle = {
+        color: 'tomato',
+        fontWeight: 'bold'
+    }
+
     return (
         <div>
             <form onSubmit={addTask} className='d-flex justify-content-center align-items-center mb-4'>
@@ -32,19 +47,22 @@ const TaskForm = ({add}) => {
                         <label>Descripcion:</label> <input className='form-control form-control-lg' required autoFocus type="Text" ref={descriptionRef} id='inputDesc' placeholder='Descripción' />
                         <label htmlFor='selectPriority' className='sr-only'>Priority:</label> 
                             <select ref={priorityRef} defaultValue={LEVELS.NORMAL} id='selectPriority'>
-                                <option value={LEVELS.NORMAL}>
+                                <option style={normalStyle} value={LEVELS.NORMAL}>
                                     Normal
                                 </option>
-                                <option value={LEVELS.URGENT}>
+                                <option style={urgentStyle} value={LEVELS.URGENT}>
                                     Urgent
                                 </option>
-                                <option value={LEVELS.BLOCKING}>
+                                <option style={blockingStyle} value={LEVELS.BLOCKING}>
                                     Blocking
                                 </option>
 
                         </select>
 
-                    <button type="submit" className='btn btn-primary btn-lg ms-2'>Añadir Tarea</button>
+                    <button type="submit" className='btn btn-primary btn-lg ms-2'>
+
+                        {length >0 ? 'Añada una nueva tarea':'Cree su primera tarea'}
+                    </button>
                 </div>
                 
             </form>
@@ -53,7 +71,8 @@ const TaskForm = ({add}) => {
 }
 
 TaskForm.protoTypes = {
-    add: PropTypes.func.isRequired
+    add: PropTypes.func.isRequired,
+    length: PropTypes.number.isRequired
 }
 
 export default TaskForm;

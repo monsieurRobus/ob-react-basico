@@ -63,14 +63,26 @@ const TaskComponent = ({task, complete, deleteTask}) => {
             return (<i onClick={()=>complete(task)} className="bi-toggle-off task-action" style={{color:"tomato"}}></i>) 
     }
 
+    const taskCompleted = {
+        color:'greenyellow',
+        textDecoration: 'line-through'
+    }
+
+    const taskIncompleted = {
+        fontWeight: 'bold',
+        color: 'tomato'
+    
+
+    }
+
     return (
 
-        <tr className="fw-normal">
+        <tr className="fw-normal" style={task.completed ? taskCompleted:taskIncompleted}>
             <th>
-                <span className="ms-2" style={{color:"gray"}}>{task.name}</span>
+                <span className="ms-2" >{task.name}</span>
             </th>
             <td>
-                <span className="align-middle task-action" style={{color:"gray"}}>{task.description}</span>
+                <span className="align-middle task-action" >{task.description}</span>
             </td>
             <td>
                 {/**Ejecutamos la funcion que nos devolverá la medalla */}

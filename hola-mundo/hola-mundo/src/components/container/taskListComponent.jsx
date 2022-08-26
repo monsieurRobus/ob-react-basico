@@ -63,7 +63,39 @@ function TaskListComponent() {
 
     {/** Operador condicional que, en función de las tareas que tengamos, dibujará un mensaje o la tabla de tareas */}
 
-        
+    const Table = () => 
+        {
+            
+        return( tasks.length >0 ?
+            <table>
+            <thead>
+                <tr>
+                    <th scope="col" style={{color:"gray"}}>Title</th>
+                    <th scope="col" style={{color:"gray"}}>Description</th>
+                    <th scope="col" style={{color:"gray"}}>Priority</th>
+                    <th scope="col" style={{color:"gray"}}>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {/**Iteramos sobre una lista de tareas */}
+                {tasks.map((task,index) => {
+                    return(
+                        <TaskComponent 
+                            key={index} 
+                            task={task} 
+                            complete={completeTask} 
+                            deleteTask={deleteTask}>
+                        </TaskComponent>)
+                })}
+                
+            </tbody>                            
+        </table>
+           :
+           <h5>Lo has hecho todo, ere un crá <i className="bi-emoji-laughing"></i></h5>)}
+    
+    
+    let tablaDibujada = <Table></Table>
+
     return (
         <div>
 
@@ -83,34 +115,9 @@ function TaskListComponent() {
                 {/**Card body (cuerpo) */}
                     
                     <div className='card-body' data-mbd-perfect-scrollbar="true" style={estiloCuerpoTarjeta}>
-                        {tasks.length >0 ?
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th scope="col" style={{color:"gray"}}>Title</th>
-                                    <th scope="col" style={{color:"gray"}}>Description</th>
-                                    <th scope="col" style={{color:"gray"}}>Priority</th>
-                                    <th scope="col" style={{color:"gray"}}>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {/**Iteramos sobre una lista de tareas */}
-                                {tasks.map((task,index) => {
-                                    return(
-                                        <TaskComponent 
-                                            key={index} 
-                                            task={task} 
-                                            complete={completeTask} 
-                                            deleteTask={deleteTask}>
-                                        </TaskComponent>)
-                                })}
-                                
-                            </tbody>                            
-                        </table>
-                        :
-                        <h5>Lo has hecho todo, ere un crá <i className="bi-emoji-laughing"></i></h5>}
+                       { loading ? <p>Cargando...</p>: tablaDibujada }
                     </div>
-                <TaskForm add={addTask}></TaskForm>
+                <TaskForm add={addTask} length={tasks.length}></TaskForm>
                 </div>
                 
             </div>
